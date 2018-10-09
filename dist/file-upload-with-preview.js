@@ -21,18 +21,19 @@ var FileUploadWithPreview = function () {
         this.uploadId = uploadId;
         this.options = options || {};
         this.options.showDeleteButtonOnImages = this.options.hasOwnProperty('showDeleteButtonOnImages') ? this.options.showDeleteButtonOnImages : true;
+        this.options.container = this.options.container || document;
         this.cachedFileArray = [];
         this.selectedFilesCount = 0;
 
         // Grab the custom file container elements
-        this.el = document.querySelector('.custom-file-container[data-upload-id="' + this.uploadId + '"]');
+        this.el = this.options.container.querySelector('.custom-file-container[data-upload-id="' + this.uploadId + '"]');
         if (!this.el) {
             throw new Error('Could not find a \'custom-file-container\' with the id of: ' + this.uploadId);
         }
         this.input = this.el.querySelector('input[type="file"]');
-        this.inputLabel = this.el.querySelector('.custom-file-container__custom-file__custom-file-control');
-        this.imagePreview = this.el.querySelector('.custom-file-container__image-preview');
-        this.clearButton = this.el.querySelector('.custom-file-container__image-clear');
+        this.inputLabel = this.el.querySelector('.custom-file-container__custom-file__custom-file-control[data-upload-id="' + this.uploadId + '"]');
+        this.imagePreview = this.el.querySelector('.custom-file-container__image-preview[data-upload-id="' + this.uploadId + '"]');
+        this.clearButton = this.el.querySelector('.custom-file-container__image-clear[data-upload-id="' + this.uploadId + '"]');
 
         // Make sure all elements have been attached
         if (!this.el || !this.input || !this.inputLabel || !this.imagePreview || !this.clearButton) {
